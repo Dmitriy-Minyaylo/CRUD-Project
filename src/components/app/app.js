@@ -8,12 +8,12 @@ import './app.css'
 
 function App() {
 	const data = [
-		{ name: 'Phillip', salary: 560, incEmp: false },
-		{ name: 'Adolf', salary: 1560, incEmp: true },
-		{ name: 'Masha', salary: 660, incEmp: false },
-		{ name: 'Hanck', salary: 1060, incEmp: true },
-		{ name: 'Bank', salary: 160, incEmp: true },
-		{ name: 'Ha-backonck', salary: 1460, incEmp: true },
+		{ name: 'Phillip', salary: 560, increase: false, id: 1 },
+		{ name: 'Adolf', salary: 1560, increase: true, id: 2 },
+		{ name: 'Masha', salary: 660, increase: false, id: 3 },
+		{ name: 'Hanck', salary: 1060, increase: true, id: 4 },
+		{ name: 'Bank', salary: 160, increase: true, id: 5 },
+		{ name: 'Ha-backonck', salary: 1460, increase: true, id: 6 },
 	]
 
 	return (

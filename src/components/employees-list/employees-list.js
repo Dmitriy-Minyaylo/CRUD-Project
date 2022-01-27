@@ -4,14 +4,9 @@ import './employees-list.css'
 
 const EmployeesList = ({ data }) => {
 	const elems = data.map(item => {
-		// вместо props в данном случае можно исп spread - {...item}
-		return (
-			<EmployeesListItem
-				name={item.name}
-				salary={item.salary}
-				incEmp={item.incEmp}
-			/>
-		)
+		const { id, ...itemProps } = item
+		// вместо name={item.name} в данном случае можно исп spread - {...item}
+		return <EmployeesListItem key={id} {...itemProps} />
 	})
 	return <ul className='app-list list-group'>{elems}</ul>
 }
