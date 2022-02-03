@@ -32,6 +32,7 @@ class App extends Component {
 					id: 6,
 				},
 			],
+			term: '',
 		}
 		this.maxId = 7
 	}
@@ -62,28 +63,45 @@ class App extends Component {
 	}
 
 	onToggleProp = (id, prop) => {
-		this.setState(({ data }) => {
+		this.setState(({ data }) => ({
 			data: data.map(item => {
 				if (item.id === id) {
 					return { ...item, [prop]: !item[prop] }
 				}
 				return item
-			})
+			}),
+		}))
+	}
+
+	searchEmp = (items, term) => {
+		if (term.length === 0) {
+			return items
+		}
+		return items.filter(item => {
+			return item.name.indexOf(term) > -1
 		})
 	}
 
+	onUpdateSearch = term => {
+		// если передаем одинаковые названия ключа и заначения, то можно сократить до term
+		this.setState({ term: term })
+	}
+
 	render() {
+		const { data, term } = this.state
 		const employees = this.state.data.length
 		const incEmployees = this.state.data.filter(item => item.increase).length
+		const visibleData = this.searchEmp(data, term)
+
 		return (
 			<div className='app'>
 				<AppInfo employees={employees} incEmployees={incEmployees} />
 				<div className='search-panel'>
-					<SearchPanel />
+					<SearchPanel onUpdateSearch={this.onUpdateSearch} />
 					<AppFilter />
 				</div>
 				<EmployeesList
-					data={this.state.data}
+					data={visibleData}
 					onDelete={this.deleteItem}
 					onToggleProp={this.onToggleProp}
 				/>
