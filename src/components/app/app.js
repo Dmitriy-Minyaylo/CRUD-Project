@@ -33,6 +33,7 @@ class App extends Component {
 				},
 			],
 			term: '',
+			filter: 'all',
 		}
 		this.maxId = 7
 	}
@@ -87,18 +88,34 @@ class App extends Component {
 		this.setState({ term: term })
 	}
 
+	filterPost = (items, filter) => {
+		switch (filter) {
+			case 'incReady':
+				return items.filter(item => item.incReady)
+			case 'moreThen1000':
+				return items.filter(item => item.salary > 1000)
+			default:
+				return items
+		}
+	}
+
+	onFilterSelect = filter => {
+		this.setState({ filter })
+	}
+
 	render() {
-		const { data, term } = this.state
+		const { data, term, filter } = this.state
 		const employees = this.state.data.length
 		const incEmployees = this.state.data.filter(item => item.increase).length
-		const visibleData = this.searchEmp(data, term)
+		// комбинированный нужный результат сначала идет поиск в data. Потом filter
+		const visibleData = this.filterPost(this.searchEmp(data, term), filter)
 
 		return (
 			<div className='app'>
 				<AppInfo employees={employees} incEmployees={incEmployees} />
 				<div className='search-panel'>
 					<SearchPanel onUpdateSearch={this.onUpdateSearch} />
-					<AppFilter />
+					<AppFilter filter={filter} onFilterSelect={this.onFilterSelect} />
 				</div>
 				<EmployeesList
 					data={visibleData}
